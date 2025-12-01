@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 
 from api.routers import router
-from middleware.rate_limiter import (
-    SlidingWindowRateLimiter,
-    SlidingWindowRateLimitMiddleware,
-    default_key_func,
-)
+from middleware.rate_limiter import (SlidingWindowRateLimiter,
+                                     SlidingWindowRateLimitMiddleware,
+                                     default_key_func)
 
 from .settings import get_settings
 
