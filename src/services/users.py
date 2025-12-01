@@ -1,8 +1,7 @@
 import math
 from functools import lru_cache
 
-from sqlalchemy import (Column, Engine, and_, distinct, func, literal_column,
-                        select)
+from sqlalchemy import Column, Engine, and_, distinct, func, literal_column, select
 from sqlalchemy.orm import Session
 
 from models import Organization, User
@@ -35,26 +34,29 @@ class UserService:
                 count_statement = count_statement.filter_by(org_id=query_params.org_id)
                 statement = statement.filter_by(org_id=query_params.org_id)
 
-            if query_params.location and "location" in field_list:
+            if query_params.location:
                 count_statement = count_statement.filter_by(
                     location=query_params.location
                 )
                 statement = statement.filter_by(location=query_params.location)
 
-            if query_params.department and "department" in field_list:
+            if query_params.department:
                 count_statement = count_statement.filter_by(
                     department=query_params.department
                 )
                 statement = statement.filter_by(department=query_params.department)
 
-            if query_params.position and "position" in field_list:
+            if query_params.position:
                 count_statement = count_statement.filter_by(
                     position=query_params.position
                 )
                 statement = statement.filter_by(position=query_params.position)
 
-            if query_params.status and "status" in field_list:
-                count
+            if query_params.status:
+                count_statement = count_statement.filter(
+                    User.status.in_(query_params.status)
+                )
+                statement = statement.filter(User.status.in_(query_params.status))
 
             statement = statement.limit(query_params.limit).offset(query_params.offset)
 
